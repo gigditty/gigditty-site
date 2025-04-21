@@ -1,14 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GigDiddy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gigditty | Manage Your Music World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #E07E3F;
+      --dark: #1F1F1F;
+      --light: #ffffff;
+      --muted: #f5f5f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      color: var(--dark);
+      background: var(--light);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--light);
+      border-bottom: 1px solid var(--muted);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header img {
+      height: 48px;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(180deg, var(--muted) 0%, var(--light) 100%);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    .cta-button {
+      background: var(--primary);
+      color: var(--light);
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      opacity: 0.85;
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: var(--dark);
+      color: var(--light);
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to GigDiddy!</h1>
-    <p>Your go-to app for managing gigs, groups, and events.</p>
-    <a href="/privacy.html">Privacy Policy</a>
+  <header>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="user_data.html">User Data</a>
+    </nav>
+  </header>
 
+  <section class="hero">
+    <div>
+      <h1>Organize Your Music Life</h1>
+      <p>
+        Gigditty helps musicians, managers, and bands streamline gigs, groups, and payouts—so you can focus on the music, not the paperwork.
+      </p>
+      <a href="https://gigditty.app" class="cta-button" target="_blank" rel="noopener">Explore the App</a>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Gigditty. All rights reserved.<br />
+    <a href="privacy.html">Privacy</a> •
+    <a href="terms.html">Terms</a> •
+    <a href="user_data.html">User Data</a>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
