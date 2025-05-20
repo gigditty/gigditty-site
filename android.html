@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gigditty for Android</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: #E07E3F;
+        }
+        form {
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            padding: 0.6rem 1.2rem;
+            background: #E07E3F;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Android App In Development</h1>
+        <p>Gigditty for Android is still in development. We are actively looking for testers.</p>
+        <p>If you'd like to try the Android version early, please enter your information below.</p>
+        <form id="testerForm">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" required>
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+            <button type="submit">Request Access</button>
+        </form>
+        <p id="status"></p>
+        <div class="footer">
+            <p>&copy; 2025 Gigditty. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('testerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = 'Submitting...';
+            try {
+                const res = await fetch('https://gigditty-api-5fd5d8905841.herokuapp.com/support/inquiry', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        message: `${firstName} ${lastName} has requested to join android development!`
+                    })
+                });
+                if (res.ok) {
+                    statusEl.textContent = "Thank you! We'll be in touch soon.";
+                    document.getElementById('testerForm').reset();
+                } else {
+                    statusEl.textContent = 'There was a problem submitting your request.';
+                }
+            } catch (err) {
+                statusEl.textContent = 'There was a problem submitting your request.';
+            }
+        });
+    </script>
+</body>
+</html>
