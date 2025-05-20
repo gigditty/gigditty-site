@@ -87,6 +87,7 @@
             const signUpForm = document.getElementById('signupForm');
             const signInEmail = document.getElementById('signinEmail');
             const signUpEmail = document.getElementById('signupEmail');
+            let authToken = null;
 
             if (!groupId || !email) {
                 messageEl.textContent = 'Invalid invitation link.';
@@ -100,9 +101,13 @@
             async function acceptInvite() {
                 messageEl.textContent = 'Accepting invitation...';
                 try {
+                    const headers = { 'Content-Type': 'application/json' };
+                    if (authToken) {
+                        headers['Authorization'] = `Bearer ${authToken}`;
+                    }
                     const res = await fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/groups/${encodeURIComponent(groupId)}/invitation`, {
                         method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers,
                         body: JSON.stringify({ status: 'accepted' })
                     });
                     if (res.ok) {
@@ -129,6 +134,8 @@
                         })
                     });
                     if (res.ok) {
+                        const data = await res.json();
+                        authToken = data.token;
                         await acceptInvite();
                     } else {
                         messageEl.textContent = 'Sign in failed.';
@@ -153,6 +160,8 @@
                         })
                     });
                     if (res.ok) {
+                        const data = await res.json();
+                        authToken = data.token;
                         await acceptInvite();
                     } else {
                         messageEl.textContent = 'Account creation failed.';
