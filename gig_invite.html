@@ -28,8 +28,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Responding to Invitation</h1>
-        <p id="message">Sending your response...</p>
+        <h1>Updating Invitation</h1>
+        <p id="message">Updating your invitation...</p>
     </div>
 
     <script>
@@ -38,15 +38,20 @@
             const gigId = params.get('gigId');
             const gigMemberId = params.get('gigMemberId');
             const response = params.get('response');
+            const token = params.get('token');
             const messageEl = document.getElementById('message');
 
-            if (!gigId || !gigMemberId || !response) {
+            if (!gigId || !gigMemberId || !response || !token) {
                 messageEl.textContent = 'Invalid invitation link.';
                 return;
             }
 
             try {
-                const res = await fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/gigs/${encodeURIComponent(gigId)}/gigMembers/${encodeURIComponent(gigMemberId)}/respond?response=${encodeURIComponent(response)}`);
+                const res = await fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/gigs/${encodeURIComponent(gigId)}/gigMembers/${encodeURIComponent(gigMemberId)}/respond`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: response, token})
+                });
                 if (res.ok) {
                     messageEl.textContent = 'Your invitation status has been updated. You can return to the Gigditty app.';
                 } else {
