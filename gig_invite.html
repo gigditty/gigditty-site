@@ -28,8 +28,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Updating Invitation</h1>
-        <p id="message">Updating your invitation...</p>
+        <h1>Responding to Invitation</h1>
+        <p id="message">Sending your response...</p>
     </div>
 
     <script>
@@ -46,11 +46,7 @@
             }
 
             try {
-                const res = await fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/gigs/${encodeURIComponent(gigId)}/gigMembers/${encodeURIComponent(gigMemberId)}/status`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: response })
-                });
+                const res = await fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/gigs/${encodeURIComponent(gigId)}/gigMembers/${encodeURIComponent(gigMemberId)}/respond?response=${encodeURIComponent(response)}`);
                 if (res.ok) {
                     messageEl.textContent = 'Your invitation status has been updated. You can return to the Gigditty app.';
                 } else {
