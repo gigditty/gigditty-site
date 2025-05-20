@@ -19,6 +19,26 @@
             padding: 20px;
             background: white;
         }
+        form {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            padding: 0.6rem 1.2rem;
+            background: #E07E3F;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
         .footer {
             margin-top: 40px;
             font-size: 0.9rem;
@@ -28,8 +48,30 @@
 </head>
 <body>
     <div class="container">
-        <h1>Accepting Invitation...</h1>
-        <p id="message">Please wait while we process your invitation.</p>
+        <h1>Respond to Invitation</h1>
+        <p id="message">Please sign in or create an account to continue.</p>
+        <div id="forms">
+            <h2>Sign In</h2>
+            <form id="signinForm">
+                <label for="signinEmail">Email</label>
+                <input type="email" id="signinEmail" required>
+                <label for="signinPassword">Password</label>
+                <input type="password" id="signinPassword" required>
+                <button type="submit">Sign In</button>
+            </form>
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" required>
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" required>
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" required>
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
         <div class="footer">
             <p>&copy; 2025 Gigditty. All Rights Reserved.</p>
         </div>
@@ -39,23 +81,85 @@
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
             const groupId = params.get('groupId');
+            const email = params.get('email');
             const messageEl = document.getElementById('message');
-            if (!groupId) {
+            const signInForm = document.getElementById('signinForm');
+            const signUpForm = document.getElementById('signupForm');
+            const signInEmail = document.getElementById('signinEmail');
+            const signUpEmail = document.getElementById('signupEmail');
+
+            if (!groupId || !email) {
                 messageEl.textContent = 'Invalid invitation link.';
+                document.getElementById('forms').style.display = 'none';
                 return;
             }
-            fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/groups/${encodeURIComponent(groupId)}/invitation`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: 'accepted' })
-            }).then(res => {
-                if (res.ok) {
-                    messageEl.textContent = 'Invitation accepted! You can return to the Gigditty app.';
-                } else {
+
+            signInEmail.value = email;
+            signUpEmail.value = email;
+
+            async function acceptInvite() {
+                messageEl.textContent = 'Accepting invitation...';
+                try {
+                    const res = await fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/groups/${encodeURIComponent(groupId)}/invitation`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: 'accepted' })
+                    });
+                    if (res.ok) {
+                        messageEl.textContent = 'Invitation accepted! You can return to the Gigditty app.';
+                        document.getElementById('forms').style.display = 'none';
+                    } else {
+                        messageEl.textContent = 'There was a problem accepting your invitation.';
+                    }
+                } catch (err) {
                     messageEl.textContent = 'There was a problem accepting your invitation.';
                 }
-            }).catch(() => {
-                messageEl.textContent = 'There was a problem accepting your invitation.';
+            }
+
+            signInForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                messageEl.textContent = 'Signing in...';
+                try {
+                    const res = await fetch('https://gigditty-api-5fd5d8905841.herokuapp.com/users/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: signInEmail.value,
+                            password: document.getElementById('signinPassword').value
+                        })
+                    });
+                    if (res.ok) {
+                        await acceptInvite();
+                    } else {
+                        messageEl.textContent = 'Sign in failed.';
+                    }
+                } catch (err) {
+                    messageEl.textContent = 'Sign in failed.';
+                }
+            });
+
+            signUpForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                messageEl.textContent = 'Creating account...';
+                try {
+                    const res = await fetch('https://gigditty-api-5fd5d8905841.herokuapp.com/user', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: signUpEmail.value,
+                            firstName: document.getElementById('firstName').value,
+                            lastName: document.getElementById('lastName').value,
+                            password: document.getElementById('signupPassword').value
+                        })
+                    });
+                    if (res.ok) {
+                        await acceptInvite();
+                    } else {
+                        messageEl.textContent = 'Account creation failed.';
+                    }
+                } catch (err) {
+                    messageEl.textContent = 'Account creation failed.';
+                }
             });
         });
     </script>
