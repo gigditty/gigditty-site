@@ -1,66 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gig Invitation | Gigditty</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            color: #E07E3F;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      .container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      h1 {
+        color: #e07e3f;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Updating Invitation</h1>
-        <p id="message">Updating your invitation...</p>
+      <h1>Updating Invitation</h1>
+      <p id="message">Updating your invitation...</p>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            const params = new URLSearchParams(window.location.search);
-            const gigId = params.get('gigId');
-            const gigMemberId = params.get('gigMemberId');
-            const response = params.get('response');
-            const token = params.get('token');
-            const messageEl = document.getElementById('message');
+      document.addEventListener('DOMContentLoaded', async function () {
+        const params = new URLSearchParams(window.location.search);
+        const gigId = params.get('gigId');
+        const gigMemberId = params.get('gigMemberId');
+        const response = params.get('response');
+        const token = params.get('token');
+        const messageEl = document.getElementById('message');
 
-            if (!gigId || !gigMemberId || !response || !token) {
-                messageEl.textContent = 'Invalid invitation link.';
-                return;
-            }
+        if (!gigId || !gigMemberId || !response || !token) {
+          messageEl.textContent = 'Invalid invitation link.';
+          return;
+        }
 
-            try {
-                const res = await fetch(`https://gigditty-api-5fd5d8905841.herokuapp.com/gigs/${encodeURIComponent(gigId)}/gigMembers/${encodeURIComponent(gigMemberId)}/respond`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: response, token})
-                });
-                if (res.ok) {
-                    messageEl.textContent = 'Your invitation status has been updated. You can return to the Gigditty app.';
-                } else {
-                    messageEl.textContent = 'There was a problem updating your invitation.';
-                }
-            } catch (err) {
-                messageEl.textContent = 'There was a problem updating your invitation.';
+        try {
+          const res = await fetch(
+            `https://gigditty-api-5fd5d8905841.herokuapp.com/gigs/${encodeURIComponent(gigId)}/gigMembers/${encodeURIComponent(
+              gigMemberId
+            )}/respond?status=${encodeURIComponent(response)}&token=${encodeURIComponent(token)}`,
+            {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' },
             }
-        });
+          );
+
+          if (res.ok) {
+            messageEl.textContent = 'Your invitation status has been updated. You can return to the Gigditty app.';
+          } else {
+            messageEl.textContent = 'There was a problem updating your invitation.';
+          }
+        } catch (err) {
+          messageEl.textContent = 'There was a problem updating your invitation.';
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
