@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discover Gigditty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #E07E3F;
+      --dark: #1F1F1F;
+      --light: #ffffff;
+      --muted: #f5f5f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      color: var(--dark);
+      background: var(--light);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--light);
+      border-bottom: 1px solid var(--muted);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    header nav a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(180deg, var(--muted) 0%, var(--light) 100%);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      background: var(--primary);
+      color: var(--light);
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      opacity: 0.85;
+    }
+
+    .features {
+      padding: 3rem 2rem;
+      background: var(--light);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature {
+      background: var(--muted);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .feature h3 {
+      margin: 1rem 0 0.5rem;
+      color: var(--primary);
+      font-size: 1.25rem;
+    }
+
+    .feature p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .emoji {
+      font-size: 3rem;
+    }
+
+    .cta-final {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    footer {
+      background: var(--dark);
+      color: var(--light);
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="user_data.html">User Data</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Discover Gigditty</h1>
+      <p>Manage your gigs, bands and payouts all in one beautifully simple app.</p>
+      <div class="cta-buttons">
+        <a href="https://apps.apple.com/us/app/gigditty/id6743448372" class="cta-button" target="_blank" rel="noopener">Get on iOS</a>
+        <a href="android.html" class="cta-button">Get on Android</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <div class="emoji">🎸</div>
+      <h3>Streamlined Gigs</h3>
+      <p>Schedule shows and rehearsals with ease so your band always knows where to be.</p>
+    </div>
+    <div class="feature">
+      <div class="emoji">💰</div>
+      <h3>Simple Payouts</h3>
+      <p>Automatically track who gets paid and never worry about spreadsheets again.</p>
+    </div>
+    <div class="feature">
+      <div class="emoji">🤝</div>
+      <h3>Team Collaboration</h3>
+      <p>Keep managers and members on the same page with shared set lists and notes.</p>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <h2 style="font-size:2rem; color:var(--primary); margin-bottom:1rem;">Ready to rock?</h2>
+    <p style="max-width:640px; margin:0 auto 1.5rem;">Join thousands of musicians who rely on Gigditty to keep their music life organized.</p>
+    <div class="cta-buttons">
+      <a href="https://apps.apple.com/us/app/gigditty/id6743448372" class="cta-button" target="_blank" rel="noopener">Download on iOS</a>
+      <a href="android.html" class="cta-button">Download on Android</a>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Gigditty. All rights reserved.<br />
+    <a href="privacy.html">Privacy</a> •
+    <a href="terms.html">Terms</a> •
+    <a href="user_data.html">User Data</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="api.js"></script>
+</body>
+</html>
